@@ -3,8 +3,16 @@ package com.xyy.test;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+
+import javax.annotation.Resource;
 
 public class uploadFileTest {
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     @Test
     public void test1(){
         String fileName = "sdasdasd.jpg";
@@ -32,6 +40,18 @@ public class uploadFileTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     * StringRedisTemplate.
+     */
+    @Test
+    void testStringRedisTemplate(){
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        ops.set("k1","v1");
+        System.out.println(ops.get("k1"));
+
     }
 
 }
