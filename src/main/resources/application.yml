@@ -12,6 +12,13 @@ spring:
       url: jdbc:mysql://localhost:3306/waimai_db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 123456
+
+  #Redis配置
+  redis:
+    host: 192.168.150.129
+    port: 6379
+    database: 0
+
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
@@ -25,3 +32,4 @@ mybatis-plus:
 
 dijia:
   path: D:\dijia-images\
+
