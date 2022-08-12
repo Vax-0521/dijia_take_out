@@ -18,6 +18,9 @@ spring:
     host: 192.168.150.129
     port: 6379
     database: 0
+  cache:
+    redis:
+      time-to-live: 1800000 #设置缓存数据过期时间，可以不写
 
 mybatis-plus:
   configuration:

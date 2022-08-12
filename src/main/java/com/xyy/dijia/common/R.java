@@ -2,6 +2,7 @@ package com.xyy.dijia.common;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * @param <T>
  */
 @Data
-public class R<T>{
+public class R<T> implements Serializable {
     private Integer code; //状态码，1为成功，0为失败
     private String msg; //提示信息
     private T data; //数据

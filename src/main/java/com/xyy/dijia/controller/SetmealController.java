@@ -13,6 +13,8 @@ import com.xyy.dijia.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,14 @@ public class SetmealController {
      * 新增套餐方法
      * @param setmealDto
      * @return
+     *
+     * CacheEvict：清理指定缓存
+     * value：缓存的名称，每个缓存名称下面可以有多个key
+     * key：缓存的key
+     * allEntries = true 表示清理value下的所有缓存数
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> save(@RequestBody SetmealDto setmealDto){
         log.info(setmealDto.toString());
 
@@ -99,8 +107,14 @@ public class SetmealController {
     /**
      * 根据ids删除套餐
      * @return
+     *
+     * CacheEvict：清理指定缓存
+     * value：缓存的名称，每个缓存名称下面可以有多个key
+     * key：缓存的key
+     * allEntries = true 表示清理value下的所有缓存数据
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> deleteById(@RequestParam List<Long> ids){
         log.info("ids:{}",ids.toString());
 
@@ -126,8 +140,16 @@ public class SetmealController {
      * 根据条件查询套餐数据
      * @param setmeal
      * @return
+     *
+     * Cacheable：在方法执行前spring先查看缓存中是否有数据，如果有数据，则直接返回缓存数据；若没有数据，调用方法并将方法返回值放到缓存中
+     * value：缓存的名称，每个缓存名称下面可以有多个key
+     * key：缓存的key
+     * condition：条件，满足条件时才缓存数据
+     * unless：满足条件则不缓存
+     *
      */
     @GetMapping("/list")
+    @Cacheable(value = "setmealCache",key = "#setmeal + '_' + #setmeal.status")
     public R<List<Setmeal>> list(Setmeal setmeal){
         log.info("套餐数据：{}",setmeal.toString());
 
