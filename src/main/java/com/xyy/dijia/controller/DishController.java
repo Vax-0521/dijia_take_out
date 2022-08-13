@@ -241,6 +241,10 @@ public class DishController {
 
         dishService.removeWithFlavor(ids);
 
+        //一、全部清理，使用redis清理所有菜品的缓存数据
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
         return R.success("删除成功");
     }
 
@@ -255,6 +259,10 @@ public class DishController {
         log.info("ids:{} ,status",ids,status);
 
         if (dishService.updateStatusWithFlavor(status,ids)) {
+            //一、全部清理，使用redis清理所有菜品的缓存数据
+            Set keys = redisTemplate.keys("dish_*");
+            redisTemplate.delete(keys);
+
             return R.success("菜品的售卖状态更改成功！");
         }else {
             return R.error("售卖状态更改失败！");

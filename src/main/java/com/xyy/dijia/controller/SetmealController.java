@@ -169,6 +169,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping("/status/{status}")
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> updatestatus(@PathVariable Integer status, @RequestParam List<Long> ids){
         log.info("ids:{} ,status",ids,status);
 
@@ -185,6 +186,7 @@ public class SetmealController {
      * @return
      */
     @PutMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> update(@RequestBody SetmealDto dto){
         log.info(dto.toString());
 
